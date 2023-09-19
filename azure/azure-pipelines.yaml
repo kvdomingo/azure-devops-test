@@ -18,17 +18,16 @@ steps:
       kubernetesServiceEndpoint: $(kubernetesServiceConnection)
       namespace: $(kubernetesNamespace)
       command: repo
-      arguments: add traefik https://traefik.github.io/charts
+      arguments: add bitnami https://charts.bitnami.com/bitnami
 
   - task: HelmDeploy@0
-    displayName: Deploy Traefik
+    displayName: Deploy nginx
     inputs:
       connectionType: Kubernetes Service Connection
       kubernetesServiceEndpoint: $(kubernetesServiceConnection)
       namespace: $(kubernetesNamespace)
       command: upgrade
       chartType: Name
-      chartName: traefik/traefik
-      releaseName: traefik
-      arguments: --install --values values.yaml
-
+      chartName: bitnami/nginx
+      releaseName: nginx
+      arguments: --values values.yaml
