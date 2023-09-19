@@ -1,0 +1,34 @@
+trigger:
+  - main
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  kubernetesServiceConnection: ''
+  kubernetesNamespace: ''
+  system.debug: true
+
+stages:
+  - stage: Deploy
+    jobs:
+      job: Deploy
+      displayName: Deploy to Kubernetes with Helm
+      steps:
+        - task: HelmDeploy@0
+          displayName: Add Helm repo
+          inputs:
+            connectionType: Kubernetes Service Connection
+            kubernetesServiceEndpoint: $(kubernetesServiceConnection)
+            namespace: $(kubernetesNamespace)
+            command: repo
+            arguments: add traefik https://traefik.github.io/charts
+
+        - task: HelmDeploy@0
+          displayName: Deploy Traefik
+          inputs:
+            connectionType: Kubernetes Service Connection
+            kubernetesServiceEndpoint: $(kubernetesServiceConnection)
+            namespace: $(kubernetesNamespace)
+            command: upgrade
+            arguments: traefik traefik/traefik -f values.yaml
