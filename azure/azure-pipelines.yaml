@@ -14,6 +14,7 @@ stages:
     jobs:
       - job: Deploy
         displayName: Deploy to Kubernetes with Helm
+        environment: devops-test
         steps:
           - task: HelmDeploy@0
             displayName: Add Helm repo
