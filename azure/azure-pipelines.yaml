@@ -27,5 +27,8 @@ steps:
       kubernetesServiceEndpoint: $(kubernetesServiceConnection)
       namespace: $(kubernetesNamespace)
       command: upgrade
-      arguments: traefik traefik/traefik -f values.yaml
+      chartType: Name
+      chartName: traefik/traefik
+      releaseName: traefik
+      arguments: --values values.yaml
 
