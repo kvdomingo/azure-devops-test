@@ -30,5 +30,5 @@ steps:
       chartType: Name
       chartName: traefik/traefik
       releaseName: traefik
-      arguments: --values values.yaml
+      arguments: --install --values values.yaml
 
