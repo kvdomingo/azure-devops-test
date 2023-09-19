@@ -9,25 +9,22 @@ variables:
   kubernetesNamespace: default
   system.debug: true
 
-jobs:
-  - displayName: Deploy to Kubernetes with Helm
-    environment: devops-test
-    steps:
-      - task: HelmDeploy@0
-        displayName: Add Helm repo
-        inputs:
-          connectionType: Kubernetes Service Connection
-          kubernetesServiceEndpoint: $(kubernetesServiceConnection)
-          namespace: $(kubernetesNamespace)
-          command: repo
-          arguments: add traefik https://traefik.github.io/charts
+steps:
+  - task: HelmDeploy@0
+    displayName: Add Helm repo
+    inputs:
+      connectionType: Kubernetes Service Connection
+      kubernetesServiceEndpoint: $(kubernetesServiceConnection)
+      namespace: $(kubernetesNamespace)
+      command: repo
+      arguments: add traefik https://traefik.github.io/charts
 
-      - task: HelmDeploy@0
-        displayName: Deploy Traefik
-        inputs:
-          connectionType: Kubernetes Service Connection
-          kubernetesServiceEndpoint: $(kubernetesServiceConnection)
-          namespace: $(kubernetesNamespace)
-          command: upgrade
-          arguments: traefik traefik/traefik -f values.yaml
-    
+  - task: HelmDeploy@0
+    displayName: Deploy Traefik
+    inputs:
+      connectionType: Kubernetes Service Connection
+      kubernetesServiceEndpoint: $(kubernetesServiceConnection)
+      namespace: $(kubernetesNamespace)
+      command: upgrade
+      arguments: traefik traefik/traefik -f values.yaml
+
